@@ -2,10 +2,14 @@ import './css/styles.css';
 
 const DEBOUNCE_DELAY = 300;
 
-const searchInput = document.querySelector('#search-box');
-const countryList = document.querySelector('.country-list');
-const countryInfoBlock = document.querySelector('.country-info');
-console.log(searchInput, countryList, countryInfoBlock);
+// получить ссылки на элементы DOM
+const refs = {
+   searchInput: document.querySelector('#search-box'),
+   countryList: document.querySelector('.country-list'),
+   countryInfoBlock: document.querySelector('.country-info'),
+};
+
+console.log(refs.searchInput, refs.countryList, refs.countryInfoBlock);
 
 // функция, которая делает запрос на сервер и возвращает промис с ответом
 function fetchCountries() {
