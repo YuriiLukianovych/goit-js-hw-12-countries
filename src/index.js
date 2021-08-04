@@ -22,6 +22,7 @@ refs.searchInput.addEventListener(
 function onInputChange(e) {
    const filter = e.target.value.toLowerCase().trim();
    if (filter.length === 0) {
+      clearList();
       return;
    }
    fetchCountries(filter)
