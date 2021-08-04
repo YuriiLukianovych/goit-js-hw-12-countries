@@ -1,4 +1,7 @@
 import './css/styles.css';
+import { fetchCountries } from './js/fetchCountries';
+import countriesListTpl from './templates/list-template.hbs';
+import countryCardTpl from './templates/country-card-template.hbs';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -11,44 +14,19 @@ const refs = {
 
 console.log(refs.searchInput, refs.countryList, refs.countryInfoBlock);
 
-// функция, которая делает запрос на сервер и возвращает промис с ответом
-function fetchCountries() {
-   return fetch(
-      'https://restcountries.eu/rest/v2/all?fields=name;capital;population;flag;languages',
-   ).then(response => {
-      if (!response.ok) {
-         throw new Error(response.status);
-      }
-      return response.json();
-   });
-}
-fetchCountries().then(res => {
-   console.log(res[236].flag);
+fetchCountries().then(result => {
+   console.log(result[236]);
+   // getCountriesList(result);
+   getCountryCard(result[0]);
 });
-// ====================================================================================
-// ЗАГОТОВКИ:
 
-// fetch('https://jsonplaceholder.typicode.com/users')
-//    .then(response => {
-//       if (!response.ok) {
-//          throw new Error(response.status);
-//       }
-//       return response.json();
-//    })
-//    .then(data => {
-//       // Data handling
-//    })
-//    .catch(error => {
-//       // Error handling
-//    });
-
-//  пример  параметов запроса
-// const searchParams = new URLSearchParams({
-//   _limit: 5,
-//   _sort: "name",
-// });
-
-// console.log(searchParams.toString()); // "_limit=5&_sort=name"
-
-// const url = `https://jsonplaceholder.typicode.com/users?${searchParams}`;
-// console.log(url); // "https://jsonplaceholder.typicode.com/users?_limit=5&_sort=name"
+function getCountriesList(resp) {
+   refs.countryList.innerHTML = '';
+   const markup = countriesListTpl(resp);
+   refs.countryList.innerHTML = markup;
+}
+function getCountryCard(resp) {
+   refs.countryInfoBlock.innerHTML = '';
+   const markup = countryCardTpl(resp);
+   refs.countryInfoBlock.innerHTML = markup;
+}
