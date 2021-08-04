@@ -9,15 +9,14 @@ body {
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
-   background-color: #fafafa;
    color: #212121;
    line-height: 1.5;
    padding: 30px;
    min-height: 100vh;
-   background: linear-gradient(135deg, #35b5ff 0%, #cbebff 53%, #f0f9ff 100%);
-   background-repeat: no-repeat;
-   background-size: auto 100%;
-   /* background-size: contain; */
+
+   background: url('../images/ball.png') bottom 100px right 200px/300px auto
+         no-repeat,
+      linear-gradient(135deg, #35b5ff 0%, #cbebff 53%, #f0f9ff 100%);
 }
 ul,
 li {
