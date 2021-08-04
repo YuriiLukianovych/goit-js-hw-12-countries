@@ -1,4 +1,5 @@
 <ul class="card-list">
+    {{#each this}}
     <li class="card-title">
         <img class="country-img" src="{{flag}}" alt="Флаг страны" width="45" height="30">
         <p class="country-name--title">{{name}}</p>
@@ -10,4 +11,5 @@
     <span class="language">{{this.name}}</span>
     {{/each}}
     </li>
+    {{/each}}
 </ul>

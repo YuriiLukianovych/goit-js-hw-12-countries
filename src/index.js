@@ -1,7 +1,8 @@
 import './css/styles.css';
 import { fetchCountries } from './js/fetchCountries';
-import countriesListTpl from './templates/list-template.hbs';
-import countryCardTpl from './templates/country-card-template.hbs';
+import { getCountriesList, getCountryCard } from './js/renderMarkup';
+import _debounce from 'lodash.debounce';
+import { Notify } from 'notiflix';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -11,22 +12,38 @@ const refs = {
    countryList: document.querySelector('.country-list'),
    countryInfoBlock: document.querySelector('.country-info'),
 };
+export { refs };
 
-console.log(refs.searchInput, refs.countryList, refs.countryInfoBlock);
+refs.searchInput.addEventListener(
+   'input',
+   _debounce(onInputChange, DEBOUNCE_DELAY),
+);
 
-fetchCountries().then(result => {
-   console.log(result[236]);
-   // getCountriesList(result);
-   getCountryCard(result[0]);
-});
-
-function getCountriesList(resp) {
-   refs.countryList.innerHTML = '';
-   const markup = countriesListTpl(resp);
-   refs.countryList.innerHTML = markup;
+function onInputChange(e) {
+   const filter = e.target.value.toLowerCase().trim();
+   if (filter.length === 0) {
+      return;
+   }
+   fetchCountries(filter)
+      .then(countries => {
+         if (countries.length > 10) {
+            clearList();
+            Notify.info(
+               'Too many matches found. Please enter a more specific name.',
+            );
+         } else if (countries.length === 1) {
+            getCountryCard(countries);
+         } else {
+            getCountriesList(countries);
+         }
+      })
+      .catch(() => {
+         clearList();
+         Notify.failure('Oops, there is no country with that name');
+      });
 }
-function getCountryCard(resp) {
+
+function clearList() {
+   refs.countryList.innerHTML = '';
    refs.countryInfoBlock.innerHTML = '';
-   const markup = countryCardTpl(resp);
-   refs.countryInfoBlock.innerHTML = markup;
 }

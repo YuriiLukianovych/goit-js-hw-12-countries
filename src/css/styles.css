@@ -71,12 +71,13 @@ li {
    font-size: 18px;
    font-weight: 500;
 }
-.card-list li:not(:last-child) {
-   margin-bottom: 30px;
+.card-list .card-item:not(:last-child) {
+   margin-bottom: 10px;
 }
 .card-title {
    display: flex;
    align-items: center;
+   margin-bottom: 30px;
 }
 .value {
    font-size: 22px;
